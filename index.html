@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Arduino Control</title>
+
+	<link rel="stylesheet" href="vendor/colorpicker.css">
+	<link rel="stylesheet" href="index.css">
+
+	<script src="build/index.js"></script>
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="page-header">
+			<span class="page-title">Arduino Control Panel</span>
+      <div class="usb-icon"></div>
+      <div class="connected-button disconnected scanning">
+        <div class="connected-indicator"></div>
+        <span class="connected-status">Scanning</span>
+      </div>
+      <input class="port-input" type="text" />
+      <div class="baud">
+        <span class="baud-label">Baud Rate</span>
+        <select id="baudrate" class="form-control">
+          <option value="115200">115200</option>
+          <option value="57600">57600</option>
+          <option value="38400">38400</option>
+          <option value="19200">19200</option>
+          <option value="9600" selected>9600</option>
+          <option value="4800">4800</option>
+          <option value="2400">2400</option>
+          <option value="1800">1800</option>
+          <option value="1200">1200</option>
+          <option value="600">600</option>
+          <option value="300">300</option>
+          <option value="200">200</option>
+          <option value="150">150</option>
+          <option value="134">134</option>
+          <option value="110">110</option>
+          <option value="75">75</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="connected-container">
+      <div class="app-picker-container">
+        <div key="color-picker" class="app-choice">Color Picker</div>
+        <div key="stretch-tracker" class="app-choice">Stretch Tracker</div>
+      </div>
+      <div class="app-back">Back</div>
+      <div class="app-container color-picker-container">
+        <span class="app-container-label">LED Color Picker</span>
+        <span class="app-container-description">Choose a button to update the corresponding LED color</span>
+        <div class="color-picker-row">
+          <div class="led-lights"></div>
+          <div id="color-picker" class="cp-default"></div>
+        </div>
+      </div>
+      <div class="app-container stretch-tracker-container">
+        <span class="app-container-label">Resistance Stretch Tracker</span>
+        <span class="app-container-description">Visualize the change in resistance as the fabric stretches</span>
+        <div class="resistance-container">
+          <span class="resistance-label">Resistance</span>
+          <span class="resistance-value">0 Ohms</span>
+        </div>
+        <div class="stretch-tracker"></div>
+        <div class="calibration-container">
+          <span class="calibration-label">0% Stretch Ohm</span>
+          <input class="min-calibration" type="text" value="5000" />
+        </div>
+        <div class="calibration-container">
+          <span class="calibration-label">100% Stretch Ohm</span>
+          <input class="calibration" type="text" value="30000" />
+        </div>
+      </div>
+      <div class="serial-console-container">
+        <div class="serial-console-header">
+          <div class="serial-console-label">Serial Console</div>
+          <button class="serial-console-clear" id="clear">Clear</button>
+        </div>
+        <div class="serial-output"></div>
+        <div class="serial-console-footer">
+          <div class="serial-input-container">
+            <span class="serial-caret">&gt;</span>
+            <input id="input" type="text" class="serial-text" />
+            <span class="auto-label">Auto Send</span>
+            <input class="auto-send" type="checkbox" checked>
+          </div>
+          <button id="send" class="serial-send">Send</button>
+        </div>
+      </div>
+    </div>
+
+	</div>
+</body>
+</html>

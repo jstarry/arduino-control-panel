@@ -1,0 +1,20 @@
+{
+  "name": "arduino-control",
+  "version": "0.1.0",
+  "description": "Chrome App to control my Arduino",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1"
+  },
+  "scripts": {
+    "dev": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jstarry/arduino-control"
+  },
+  "author": "Justin Starry @jstarry",
+  "dependencies": {
+    "browser-serialport": "^2.1.0"
+  }
+}

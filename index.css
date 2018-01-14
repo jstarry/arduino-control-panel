@@ -1,0 +1,497 @@
+body {
+  font-family: monospace;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  margin: 0px;
+}
+
+div.container {
+  -webkit-app-region: drag;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.page-header {
+  text-align: center;
+  background: rgb(23,161,165);
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.page-title {
+  color: #EEE;
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.usb-icon {
+  border-radius: 100%;
+  border: 5px solid #EEE;
+  position: relative;
+  background-color: rgba(255,255,255,0.5);
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+}
+
+.usb-icon:before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.6;
+  background-image: url('./images/usb.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 75% 75%;
+}
+
+.port-input {
+  display: none;
+}
+
+.connected-button.disconnected.scanning {
+  background: rgb(206, 156, 43);
+}
+
+.connected-button.disconnected.scanning:hover {
+  background: rgb(206, 156, 43);
+  color: #EEE;
+  cursor: auto;
+}
+
+.connected-button.disconnected.not-found {
+  background: #dc6969;
+}
+.connected-button.disconnected.not-found:hover {
+  background: #dc6969;
+  color: #EEE;
+  cursor: auto;
+}
+
+.connected-button {
+  background: none;
+  border-radius: 15px;
+  border: 2px solid #EEE;
+  color: #EEE;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 8px;
+  margin-top: 15px;
+  width: 110px;
+  justify-content: center;
+}
+.connected-button:hover {
+  background: #EEE;
+  color: rgb(23,161,165);
+  cursor: pointer;
+}
+.connected-button.disconnected:hover {
+  background: #EEE;
+}
+.connected-button.disconnected {
+  background: rgb(53, 191, 95);
+}
+.connected-button:hover .connected-indicator {
+  background: rgb(23,161,165);
+}
+.connected-button.disconnected.not-found:hover .connected-indicator {
+  border: 2px solid #EEE;
+}
+.connected-button.disconnected.scanning:hover .connected-indicator {
+  border: 2px solid #EEE;
+}
+.connected-button.disconnected:hover .connected-indicator {
+  border: 2px solid rgb(23,161,165);
+  background: none;
+}
+.connected-indicator {
+  border-radius: 100%;
+  background: #EEE;
+  width: 10px;
+  height: 10px;
+  box-sizing: border-box;
+  margin-right: 5px;
+}
+.disconnected .connected-indicator {
+  background: none;
+  border: 2px solid #EEE;
+}
+.connected-status {
+  font-size: 12px;
+}
+
+#portPath {
+  display: none;
+}
+
+.baud {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 15px;
+}
+
+.baud-label {
+  color: #EEE;
+  font-size: 12px;
+}
+
+#baudrate {
+  background: #EEE;
+  border: none;
+  margin-left: 10px;
+  height: 25px;
+  width: 100px;
+  font-family: monospace;
+  cursor: pointer;
+  color: rgb(23,161,165);
+  font-weight: bold;
+}
+
+#connected-container {
+	display: none;
+  flex-direction: column;
+  height: 100%;
+  background: #FAFAFA;
+  position: relative;
+}
+
+
+.app-picker-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-choice {
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 10px;
+  color: #EEE;
+  font-size: 16px;
+  width: 200px;
+  text-align: center;
+  margin: 20px;
+  background: rgb(23,161,165);
+}
+
+.app-choice:hover {
+  background: #EEE;
+  color: rgb(23,161,165);
+}
+
+.app-container.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.app-container {
+  display: none;
+}
+
+
+.app-back {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 5px;
+  color: #EEE;
+  font-size: 14px;
+  width: 40px;
+  text-align: center;
+  background: rgb(23,161,165);
+}
+
+.resistance-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.resistance-label {
+  color: #555;
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 10px;
+}
+.resistance-value {
+  border-radius: 5px;
+  padding: 5px;
+  color: #EEE;
+  font-size: 12px;
+  background: rgb(23,161,165);
+}
+.stretch-tracker {
+  border-radius: 5px;
+  height: 50px;
+  background: #333;
+  margin: 10px 0px;
+  transition: width 0.1s;
+}
+.calibration, .min-calibration {
+  padding: 5px;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  text-align: center;
+  font-weight: bold;
+  color: #555;
+}
+.calibration-label {
+  color: #555;
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 10px;
+}
+.calibration-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.stretch-tracker-container {
+  padding: 30px;
+}
+
+.color-picker-container {
+  flex: 2;
+  padding: 15px;
+}
+.app-container-label {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+.app-container-description {
+  font-size: 12px;
+  color: #888;
+  display: block;
+}
+.color-picker-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#color-picker {
+  -webkit-app-region: no-drag;
+}
+#color-picker .picker {
+  width: 100px;
+  border-radius: 5px;
+  border: 3px solid white;
+  overflow: hidden;
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+}
+#color-picker .picker-indicator {
+  border: 2px solid white;
+  width: 3px;
+  height: 3px;
+  opacity: 1;
+  background: transparent;
+}
+
+#color-picker .slide-wrapper {
+  margin-left: 5px;
+}
+
+#color-picker .slide {
+  border: 3px solid white;
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+#color-picker .slide-indicator {
+  border-radius: 0px;
+  margin-top: 5px;
+  padding: 0px;
+  height: 8px;
+  left: 0px;
+  box-sizing: border-box;
+  opacity: 1;
+  background: rgba(0,0,0,0.2);
+  border: 2px solid white;
+}
+
+div.led-lights {
+  margin: 16px 0px;
+  width: 280px;
+  background: #DDD;
+  border: 3px solid #CCC;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+div.led-light {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  margin: 10px;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 3px solid #FAFAFA;
+  box-shadow: none;
+}
+
+div.led-light:hover {
+  cursor: pointer;
+}
+
+.serial-console-container {
+  flex: 1;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: 1px solid #EEE;
+  background: #efefef;
+  font-family: monospace;
+  font-weight: bold;
+  color: #555;
+  padding: 5px;
+}
+
+.serial-output {
+  -webkit-app-region: no-drag;
+  flex: 1;
+  width: 100%;
+  background: #fdfdfd;
+  box-sizing: border-box;
+  padding: 5px;
+  font-family: monospace;
+  font-weight: bold;
+  color: #555;
+  border-radius: 2px;
+  border: none;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+}
+
+.serial-msg {
+  padding: 2px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-right: auto;
+  margin-bottom: 4px;
+}
+
+.serial-console-header {
+  padding-left: 5px;
+  padding-bottom: 5px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+.serial-console-label {
+  font-size: 15px;
+  flex: 1;
+}
+
+button.serial-console-clear {
+  border: 1px solid #EEE;
+  border-radius: 2px;
+  font-family: monospace;
+  font-weight: bold;
+  color: #555;
+  outline: none;
+  height: 30px;
+}
+
+button.serial-console-clear:hover {
+  background: #DDD;
+  border: 1px solid #CCC;
+  cursor: pointer;
+}
+
+.serial-console-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.serial-input-container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  border-radius: 2px;
+  background: white;
+  border: 1px solid #EEE;
+  align-items: center;
+  height: 30px;
+}
+
+.serial-caret {
+  color: #CCC;
+}
+
+.serial-input-container span {
+  margin: 0px 5px;
+  font-family: monospace;
+  font-weight: bold;
+  color: #555;
+}
+
+.serial-text {
+  background: none;
+  border: none;
+  flex: 1;
+  font-size: 14px;
+  outline: none;
+  font-family: monospace;
+  font-weight: bold;
+  color: #555;
+}
+
+.auto-label {
+  margin-left: 5px;
+  flex: 0;
+  border-left: 1px solid #EEE;
+  padding-left: 5px;
+}
+
+.auto-send {
+  flex: 0;
+}
+
+button.serial-send {
+  margin-left: 5px;
+  border: 1px solid #EEE;
+  border-radius: 2px;
+  height: 30px;
+  font-family: monospace;
+  font-weight: bold;
+  color: #555;
+  outline: none;
+}
+
+button.serial-send:hover {
+  background: #DDD;
+  border: 1px solid #CCC;
+  cursor: pointer;
+}
