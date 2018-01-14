@@ -205,6 +205,8 @@ function connect(port, baudrate) {
     window.resizeTo(360, 576);
     document.getElementById("connected-container").style.display = "none";
     var activeApp = document.querySelector(".active.app-container");
+    var connectedButton = document.querySelector(".connected-button");
+    connectedButton.classList.add("disconnected");
     if (activeApp) activeApp.classList.remove("active");
   });
 
