@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "description": "Chrome App to control my Arduino",
   "devDependencies": {
+    "browserify": "^15.1.0",
     "gulp": "^3.9.1",
-    "gulp-browserify": "^0.5.1"
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
   "scripts": {
     "dev": "gulp"
