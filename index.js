@@ -2,7 +2,7 @@ require('./vendor/colorpicker.js'); // global
 var SerialPortLib = require('browser-serialport');
 var SerialPort = SerialPortLib.SerialPort;
 
-var PortPoller = setInterval(function() {
+function pollPorts() {
   SerialPortLib.list(function(err, ports) {
     var statusButton = document.querySelector(".connected-button");
     var connectedStatus = document.querySelector(".connected-status");
@@ -29,8 +29,9 @@ var PortPoller = setInterval(function() {
       connectedStatus.innerHTML = "USB Not Found";
     }
   });
-}, 1000);
+}
 
+var portPoller = setInterval(pollPorts, 1000);
 var sp;
 var output;
 
@@ -61,6 +62,7 @@ function send(line='') {
 
 
 window.onload = function() {
+  pollPorts();
   output = document.querySelector(".serial-output");
   var connectedButton = document.querySelector(".connected-button");
   var connectedStatus = document.querySelector(".connected-status");
