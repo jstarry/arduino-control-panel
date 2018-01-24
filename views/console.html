@@ -1,0 +1,21 @@
+<template class="task-template">
+  <section id="console-section" class="section">
+    <div class="serial-console-container">
+      <div class="serial-console-header">
+        <div class="serial-console-label">Serial Console</div>
+      </div>
+      <div class="serial-output"></div>
+      <div class="serial-console-footer">
+        <div class="serial-input-container">
+          <span class="serial-caret connect-color">&gt;</span>
+          <input id="input" type="text" class="serial-text" placeholder="Send message..." />
+        </div>
+        <button id="send" class="serial-send connect-color">Send</button>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/console')
+    </script>
+  </section>
+</template>

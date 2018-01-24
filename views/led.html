@@ -1,0 +1,16 @@
+<template class="task-template">
+  <section id="led-section" class="section js-section">
+    <div class="color-picker-container">
+      <span class="app-container-label">LED Color Picker</span>
+      <span class="app-container-description">Choose a button to update the corresponding LED color</span>
+      <div class="color-picker-row">
+        <div class="led-lights"></div>
+        <div id="color-picker" class="cp-default"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+    require('./renderer-process/led')
+    </script>
+  </section>
+</template>

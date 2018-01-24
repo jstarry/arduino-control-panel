@@ -1,22 +1,30 @@
 {
   "name": "arduino-control",
   "version": "0.1.0",
-  "description": "Chrome App to control my Arduino",
-  "devDependencies": {
-    "browserify": "^15.1.0",
-    "gulp": "^3.9.1",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
-  },
-  "scripts": {
-    "dev": "gulp"
-  },
+  "description": "Electron App to control my Arduino",
   "repository": {
     "type": "git",
     "url": "git://github.com/jstarry/arduino-control"
   },
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --debug"
+  },
+  "main": "main.js",
   "author": "Justin Starry @jstarry",
+  "license": "MIT",
   "dependencies": {
-    "browser-serialport": "^2.1.0"
+    "electron-settings": "^3.1.2",
+    "electron-shortcut-normalizer": "^1.0.0",
+    "electron-unhandled": "^1.0.0",
+    "glob": "^7.1.0",
+    "serialport": "^6.0.4"
+  },
+  "devDependencies": {
+    "devtron": "^1.4.0",
+    "electron": "~1.7.10",
+    "electron-rebuild": "^1.7.3",
+    "graceful-fs": "^4.1.11",
+    "spectron": "~3.7.2"
   }
 }
