@@ -32,6 +32,9 @@ function showSection(section) {
     case 'led':
       showLED()
       break;
+    case 'stretch':
+      showStretch()
+      break;
   }
 }
 
@@ -47,6 +50,12 @@ function showLED(event) {
   WINDOW.webContents.send('color.change', 'led-color')
 }
 
+function showStretch(event) {
+  document.getElementById('stretch-section').classList.add('is-shown')
+  document.querySelector('.stretch-tab').classList.add('active-tab')
+  WINDOW.webContents.send('color.change', 'stretch-color')
+}
+
 function showNavAndConsole(event) {
   document.querySelector('nav.sidebar').classList.add('is-shown')
   document.getElementById('console-section').classList.add('is-shown')
@@ -59,7 +68,7 @@ function hideNavAndConsole(event) {
 
 function hideAllSections(hideConsole=true) {
   document.querySelector('.active-tab').classList.remove('active-tab')
-  const sections = document.querySelectorAll('.js-section.is-shown')
+  const sections = document.querySelectorAll('.view-section.is-shown')
   Array.prototype.forEach.call(sections, function (section) {
     section.classList.remove('is-shown')
   })

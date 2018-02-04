@@ -67,6 +67,8 @@ nav.sidebar {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  border-top: 1px solid #FAFAFA;
+  border-bottom: 1px solid #FAFAFA;
 }
 
 .active-tab.nav-tab {
@@ -105,6 +107,14 @@ nav.sidebar {
 }
 .active-tab.led-tab svg.svg-inline--fa {
   color: rgb(223,147,148);
+}
+
+.active-tab.stretch-tab .nav-icon-wrapper {
+  background: rgba(160, 101, 160, 0.1);
+  border: 1px solid rgb(160, 101, 160);
+}
+.active-tab.stretch-tab svg.svg-inline--fa {
+  color: rgb(160, 101, 160);
 }
 
 div.container {
@@ -234,41 +244,65 @@ section#connect-section {
   font-weight: bold;
 }
 
-section#console-section {
-  flex-direction: column;
-  height: 100%;
-  min-width: 350px;
-  background: #FAFAFA;
-  border-left: 1px solid #DDD;
-  position: relative;
+.app-container-label {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
 }
 
-.resistance-container {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.resistance-label {
-  color: #555;
-  font-weight: bold;
-  font-size: 14px;
-  margin-right: 10px;
-}
-.resistance-value {
-  border-radius: 5px;
-  padding: 5px;
-  color: #EEE;
+.app-container-description {
   font-size: 12px;
-  background: rgb(23,161,165);
+  color: #888;
+  display: block;
 }
+
+section#stretch-section {
+  flex: 1;
+  background: rgb(242,234,243);
+}
+
+.stretch-tracker-container {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 80%;
+  margin: 0px auto;
+}
+
+.app-container-label.stretch-container-label {
+  color: rgb(120, 61, 100);
+}
+
 .stretch-tracker {
   border-radius: 5px;
   height: 50px;
   background: #333;
-  margin: 10px 0px;
+  margin: 20px 0px;
+  width: 100%;
   transition: width 0.1s;
+  background: #666;
+  border: 1px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.resistance-value {
+  font-weight: bold;
+  color: #FAFAFA;
+}
+
+.calibration-header {
+  font-size: 12px;
+  color: #888;
+  display: block;
+}
+
 .calibration, .min-calibration {
   padding: 5px;
   border-radius: 3px;
@@ -278,20 +312,19 @@ section#console-section {
   font-weight: bold;
   color: #555;
 }
+
 .calibration-label {
   color: #555;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
   margin-right: 10px;
 }
+
 .calibration-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.stretch-tracker-container {
-  padding: 30px;
+  margin-top: 10px;
 }
 
 section#led-section {
@@ -309,18 +342,6 @@ section#led-section {
 }
 .app-container-label.color-picker-label {
   color: #d08788;
-}
-.app-container-label {
-  display: block;
-  margin-bottom: 3px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-}
-.app-container-description {
-  font-size: 12px;
-  color: #888;
-  display: block;
 }
 .color-picker-row {
   display: flex;
@@ -498,6 +519,15 @@ div.led-container {
   border: 1px solid #d401c4;
 }
 
+section#console-section {
+  flex-direction: column;
+  height: 100%;
+  min-width: 350px;
+  background: #FAFAFA;
+  border-left: 1px solid #DDD;
+  position: relative;
+}
+
 .serial-console-container {
   flex: 1;
   height: 300px;
@@ -576,6 +606,9 @@ div.led-container {
 .serial-msg.led-color {
   color: rgb(226, 116, 117);
 }
+.serial-msg.stretch-color {
+  color: rgb(160, 101, 160);
+}
 
 .serial-console-footer {
   display: flex;
@@ -615,6 +648,11 @@ div.led-container {
   color: rgb(23,161,165);
   border: 1px solid rgb(23,161,165);
 }
+.serial-caret.stretch-color {
+  background: rgba(160, 101, 160, 0.1);
+  color: rgb(160, 101, 160);
+  border: 1px solid rgb(160, 101, 160);
+}
 
 .serial-text {
   background: none;
@@ -638,15 +676,21 @@ button.serial-send {
   padding: 8px;
 }
 
+button.serial-send.connect-color {
+  background: rgb(23,161,165);
+}
+button.serial-send.connect-color:hover {
+  background: rgb(4, 142, 146);
+}
 button.serial-send.led-color {
   background: rgb(223,147,148);
 }
 button.serial-send.led-color:hover {
   background: rgb(226, 116, 117);
 }
-button.serial-send.connect-color {
-  background: rgb(23,161,165);
+button.serial-send.stretch-color {
+  background: rgb(190, 131, 190);
 }
-button.serial-send.led-color:hover {
-  background: rgb(4, 142, 146);
+button.serial-send.stretch-color:hover {
+  background: rgb(160, 101, 160);
 }

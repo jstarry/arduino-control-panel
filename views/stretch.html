@@ -1,13 +1,12 @@
 <template class="task-template">
-  <section id="ohm-meter-section" class="section js-section">
+  <section id="stretch-section" class="section view-section">
     <div class="stretch-tracker-container">
-      <span class="app-container-label">Resistance Stretch Tracker</span>
-      <span class="app-container-description">Visualize the change in resistance as the fabric stretches</span>
-      <div class="resistance-container">
-        <span class="resistance-label">Resistance</span>
+      <span class="app-container-label stretch-container-label">Resistance Stretch Tracker</span>
+      <span class="app-container-description">Visualize the stretchy fabric's resistance</span>
+      <div class="stretch-tracker">
         <span class="resistance-value">0 Ohms</span>
       </div>
-      <div class="stretch-tracker"></div>
+      <span class="calibration-header">Calibration Settings:</span>
       <div class="calibration-container">
         <span class="calibration-label">0% Stretch Ohm</span>
         <input class="min-calibration" type="text" value="5000" />
@@ -19,7 +18,7 @@
     </div>
 
     <script type="text/javascript">
-      require('./renderer-process/ohm-meter')
+      require('./renderer-process/stretch')
     </script>
   </section>
 </template>
