@@ -7,6 +7,8 @@ const app = electron.app
 
 const debug = /--debug/.test(process.argv[2])
 
+process.on('unhandledRejection', r => console.log(r));
+
 var mainWindow = null
 
 function initialize () {
@@ -22,6 +24,7 @@ function initialize () {
       frame: false,
       resizable: false,
       titleBarStyle: 'hiddenInset',
+      backgroundColor: '#E1F3F4',
       title: app.getName(),
       icon: path.join(__dirname, '/assets/app-icon/png/512.png')
     }

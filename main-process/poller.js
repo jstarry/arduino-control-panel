@@ -10,8 +10,10 @@ let listener = null
 let usbPort = null
 
 ipc.on('usb.status', function(event, fromWindowId) {
+  pollPorts()
   listener = BrowserWindow.fromId(fromWindowId).webContents
   listener.send(status == CONNECTED ? 'usb.connected' : 'usb.disconnected', usbPort)
+  setInterval(pollPorts, 1000)
 })
 
 function pollPorts() {
@@ -35,7 +37,3 @@ function pollPorts() {
     }
   })
 }
-
-// Poll ports every second
-setInterval(pollPorts, 1000)
-pollPorts()

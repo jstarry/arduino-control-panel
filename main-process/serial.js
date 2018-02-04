@@ -16,40 +16,38 @@ ipc.on('serial.close', function(event) {
 })
 
 ipc.on('serial.write', function(event, data) {
-  serialport.write(data)
+  if (serialport) {
+    serialport.write(data + "\n")
+  }
 })
 
-ipc.on('serial.connect', function(event, port, baudrate) {
-  serialport = new SerialPort(port, {
-    baudRate: baudrate,
-    lock: false
-  }, true)
+ipc.on('serial.connect', function(event, port, baudRate) {
+  serialport = new SerialPort(port, {baudRate, lock: false})
 
   serialport.on('open', function() {
     listener.send('serial.open')
   })
 
-  serialport.on('close', function(string) {
+  serialport.on('close', function() {
     listener.send('serial.close')
     serialport = null
   })
 
-  serialport.on('error', function(string) {
+  serialport.on('error', function(err) {
     console.error(string)
   })
 
-  //const parser = ; //{ delimiter: '\r\n' }
-  let buildData = ''
-  serialport.pipe(new Readline()).on('data', function(data) {
-    const message = buildData + data.toString()
-    if (message.last == '\n' || message.last == '\r') {
-      buildData = ''
-    } else {
-      buildData = message
-      return
-    }
-
-    conosle.log(message)
-    listener.send('serial.message', message)
+  serialport.pipe(new Readline()).on('data', function(message) {
+    listener.send('serial.received', message)
   })
 })
+
+module.exports = {
+  open: function() {
+    listener.send('serial.open')
+  },
+  close: function() {
+    if (serialport) serialport.close((e) => {})
+    else listener.send('serial.close')
+  }
+}

@@ -1,6 +1,15 @@
+html {
+  position: absolute;
+  background: none;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+}
 body {
   font-family: monospace;
   position: absolute;
+  background: none;
   top: 0px;
   left: 0px;
   bottom: 0px;
@@ -90,7 +99,7 @@ div.container {
 
 section#connect-section {
   text-align: center;
-  background: rgba(23,161,165, 0.1);
+  background-color: '#E1F3F4';
   flex-direction: column;
   padding: 30px;
   align-items: center;
@@ -137,7 +146,7 @@ section#connect-section {
 }
 
 .connected-button {
-  background: rgba(23,161,165, 0.5);
+  background: rgb(23,161,165);
   border-radius: 15px;
   color: white;
   opacity: 0.7;
@@ -271,12 +280,19 @@ section#console-section {
 
 section#led-section {
   flex: 1;
-  background: rgba(223,147,148, 0.1);
+  background: rgb(251,241,241);
 }
 
 .color-picker-container {
   flex: 2;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.app-container-label.color-picker-label {
+  color: #d08788;
 }
 .app-container-label {
   display: block;
@@ -341,35 +357,124 @@ div.led-lights {
   background: #FFF;
   border: 1px solid #DDD;
   border-radius: 5px;
+  display: flex;
+  flex-flow: row wrap;
+  width: 252px;
+  padding: 5px;
 }
 
-div.led-light {
+div.led-container {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.led-light {
+  position: absolute;
+  top: 0px;
+  left: 0px;
   width: 50px;
   height: 50px;
-  border-radius: 10px;
-  margin: 10px;
-  display: inline-block;
-  box-sizing: border-box;
+  margin: 5px;
+  border-radius: 4px;
   border: 1px solid;
-  background-color: #FCFCFC;
-  box-shadow: none;
-}
-.led-light.selected {
-  border: 3px solid;
-}
-
-.led-light .fa-star {
-  display: none;
-  width: 25px;
-  height: 25px;
-}
-.led-light.selected .fa-star {
-  display: block;
-  margin: 9px auto;
-}
-
-div.led-light:hover {
+  background-color: #FAFAFA;
+  border-color: #CCC;
   cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.25s;
+}
+
+.led-light.selected {
+  width: 20px;
+  height: 20px;
+  margin: 20px;
+}
+
+.led-badge {
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  border-radius: 3px;
+  transition: opacity 1s ease, border-radius 0.8s ease 0.2s, transform 1s ease, background-color 0.1s ease;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 20;
+}
+.animate-to .led-badge {
+  transform: rotate(90deg);
+  opacity: 1.0;
+  border-radius: 100%;
+}
+.led-badge:hover {
+  transition: none;
+  width: 14px;
+  height: 14px;
+  margin: 3px;
+}
+
+.led-badge.clicked:nth-child(1) {
+  background: #d01515;
+}
+.led-badge:nth-child(1) {
+  background: #ffcece;
+  border: 1px solid #d01515;
+}
+.led-badge.clicked:nth-child(2) {
+  background: green;
+}
+.led-badge:nth-child(2) {
+  background: #d0ecd0;
+  border: 1px solid green;
+}
+.led-badge.clicked:nth-child(3) {
+  background: blue;
+}
+.led-badge:nth-child(3) {
+  background: #cacae8;
+  border: 1px solid blue;
+}
+
+.led-badge.clicked:nth-child(4) {
+  background: #000;
+}
+.led-badge:nth-child(4) {
+  background: #8c8c8c;
+  border: 1px solid #000;
+}
+.led-badge:nth-child(5) {
+  visibility: hidden;
+}
+.led-badge.clicked:nth-child(6) {
+  background: #CCC;
+}
+.led-badge:nth-child(6) {
+  background: white;
+  border: 1px solid #CCC;
+}
+
+.led-badge.selected:nth-child(7) {
+  background: #22b9b9;
+}
+.led-badge:nth-child(7) {
+  background: #b7f1ee;
+  border: 1px solid #22b9b9;
+}
+.led-badge.selected:nth-child(8) {
+  background: #bbbb00;
+}
+.led-badge:nth-child(8) {
+  background: #ffffa5;
+  border: 1px solid #bbbb00;
+}
+.led-badge.selected:nth-child(9) {
+  background: #d401c4;
+}
+.led-badge:nth-child(9) {
+  background: #ffe7fd;
+  border: 1px solid #d401c4;
 }
 
 .serial-console-container {
@@ -397,6 +502,26 @@ div.led-light:hover {
   margin-top: 5px;
   text-align: center;
   flex: 1;
+}
+
+.serial-clear:hover {
+  background: white;
+  color: #555;
+}
+.serial-clear {
+  position: absolute;
+  right: 6px;
+  border: 1px solid #EEE;
+  outline: none;
+  background: #FAFAFA;
+  border-radius: 5px;
+  height: 28px;
+  width: 28px;
+  color: #777;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.7em;
+  -webkit-app-region: no-drag;
 }
 
 .serial-output {

@@ -1,47 +1,49 @@
-const BrowserWindow = require('electron').remote.BrowserWindow
 const ipc = require('electron').ipcRenderer
 
-var output = document.querySelector('.serial-output')
+function append(str, colorClass, prefix='') {
+  str = str.trim()
 
-// TODO figure out how to do multiline keyed elements
-function append(str, colorClass, key='') {
-  const split = str.trim().split('\r')
-  for (var i = 0; i < split.length; i++) {
+  let key = ''
+  let msgParts = str.split('|')
+  if (msgParts.length > 1)
+    key = (msgParts[0] + '-' + msgParts[1]).toLowerCase()
 
-    // update prev element if it exists
-    // TODO only update it if it is the most recent message
-    if (key != '') {
-      const prevEl = document.querySelector('.serial-msg[data-key=' + key + ']')
-      if (prevEl) {
-        prevEl.innerHTML = split[i]
-        return
-      }
+  if (prefix != '')
+    str = prefix + ' - ' + str
+
+  // update prev element if it exists
+  // TODO only update it if it is the most recent message
+  if (key != '') {
+    const prevEl = document.querySelector('.serial-msg[data-key=' + key + ']')
+    if (prevEl) {
+      prevEl.innerHTML = str
+      return
     }
-
-    // create message element
-    const msgEl = document.createElement('span')
-    msgEl.classList.add(colorClass)
-    msgEl.innerHTML = split[i]
-    msgEl.classList.add('serial-msg')
-    if (key != '') msgEl.dataset.key = key
-
-    // append message element to output terminal
-    output.appendChild(msgEl)
-    output.scrollTop = output.scrollHeight
   }
+
+  // create message element
+  const msgEl = document.createElement('span')
+  msgEl.classList.add(colorClass)
+  msgEl.innerHTML = str
+  msgEl.classList.add('serial-msg')
+  if (key != '') msgEl.dataset.key = key
+
+  // append message element to output terminal
+  const output = document.querySelector('.serial-output')
+  output.appendChild(msgEl)
+  output.scrollTop = output.scrollHeight
 }
 
 function systemMessage(message) {
-  append('SYSTEM - ' + message, 'connect-color')
+  append(message, 'connect-color', 'SYSTEM')
 }
 
-ipc.on('serial.message', function(event, message) {
-  const msgParts = message.split("|")
-  if (msgParts.length > 1) {
-    append(message, colorClass, (msgParts[0] + '-' + msgParts[1]).toLowerCase())
-  } else {
-    append(message, colorClass)
-  }
+ipc.on('serial.received', function(event, message) {
+  append(message, 'connect-color', 'ARDUINO')
+})
+
+ipc.on('serial.send', function(event, message) {
+  send(message)
 })
 
 ipc.on('serial.open', function(event) {
@@ -52,8 +54,6 @@ ipc.on('serial.close', function(event) {
   systemMessage('Connection closed')
 })
 
-
-var input = document.getElementById('input')
 var caret = document.querySelector('.serial-caret')
 var sendButton = document.getElementById('send')
 var colorClass = 'connect-color'
@@ -68,27 +68,32 @@ ipc.on('color.change', function(event, className) {
   caret.classList.add(colorClass)
 })
 
+var input = document.getElementById('input')
 function send(line='') {
   if (line == '') {
     line = input.value
     input.value = ''
   }
   if (line == '') return
-  line = 'USER - ' + line + '\n'
-  BrowserWindow.getFocusedWindow().webContents.send('serial.write', line)
-  append(line, colorClass)
+  ipc.send('serial.write', line)
+  append(line, colorClass, 'CONTROLLER')
 }
 
-// var clearButton = document.getElementById("clear");
-// clearButton.onclick = function() {
-//   while (output.firstChild) {
-//     output.removeChild(output.firstChild);
-//   }
-//};
+var clearButton = document.querySelector(".serial-clear");
+clearButton.onclick = function() {
+  const output = document.querySelector('.serial-output')
+  while (output.firstChild) {
+    output.removeChild(output.firstChild);
+  }
+};
 
+let lastSend = ''
 sendButton.onclick = function(e) { send(); }
-input.onkeypress = function(e) {
+input.onkeydown = function(e) {
   if (e.which == 13) {
+    lastSend = input.value
     send()
+  } else if (e.which == 38 && input.value == '') {
+    input.value = lastSend
   }
 }

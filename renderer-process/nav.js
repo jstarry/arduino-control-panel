@@ -4,17 +4,18 @@ const ipc = require('electron').ipcRenderer
 const WINDOW = BrowserWindow.getAllWindows()[0]
 
 ipc.on('serial.open', function(event) {
+  WINDOW.setResizable(true)
   WINDOW.setSize(905, 600)
   WINDOW.setMinimumSize(905, 450)
-  WINDOW.setResizable(true)
   showNavAndConsole()
   showConnect()
 })
 
 ipc.on('serial.close', function(event) {
-  WINDOW.setSize(400, 600)
   WINDOW.setMinimumSize(400, 600)
+  WINDOW.setSize(400, 600)
   WINDOW.setResizable(false)
+  hideAllSections()
   hideNavAndConsole()
   showConnect()
 })
@@ -37,11 +38,13 @@ function showSection(section) {
 
 function showConnect(event) {
   document.getElementById('connect-section').classList.add('is-shown')
+  document.querySelector('.connect-tab').classList.add('active-tab')
   WINDOW.webContents.send('color.change', 'connect-color')
 }
 
 function showLED(event) {
   document.getElementById('led-section').classList.add('is-shown')
+  document.querySelector('.led-tab').classList.add('active-tab')
   WINDOW.webContents.send('color.change', 'led-color')
 }
 
@@ -56,6 +59,7 @@ function hideNavAndConsole(event) {
 }
 
 function hideAllSections(hideConsole=true) {
+  document.querySelector('.active-tab').classList.remove('active-tab')
   const sections = document.querySelectorAll('.js-section.is-shown')
   Array.prototype.forEach.call(sections, function (section) {
     section.classList.remove('is-shown')
@@ -68,9 +72,6 @@ function setupTabs() {
     tab.addEventListener('click', function(event) {
       if (event.currentTarget.classList.contains('active-tab')) return
       showSection(event.currentTarget.dataset.section)
-      const oldActive = document.querySelector('.active-tab')
-      if (oldActive) oldActive.classList.remove('active-tab')
-      event.currentTarget.classList.add('active-tab')
     })
   })
 }

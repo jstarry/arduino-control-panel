@@ -38,7 +38,6 @@ connectedButton.addEventListener('click', function(event) {
   }
 })
 
-
 ipc.on('usb.connected', function(event, port) {
   if (connectedButton.classList.contains('scanning') || connectedButton.classList.contains('not-found')) {
     connectedPort = port
