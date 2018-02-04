@@ -27,12 +27,17 @@ connectedButton.addEventListener('mouseleave', function(event) {
   }
 })
 
+function connect() {
+  if (!connectedPort) return
+  var baudrateElement = document.getElementById('baudrate')
+  var baudrate = baudrateElement.options[baudrateElement.selectedIndex].value
+  ipc.send('serial.connect', connectedPort, parseInt(baudrate))
+}
+
 connectedButton.addEventListener('click', function(event) {
   connectedButton.classList.remove('with-hover')
   if (connectedButton.classList.contains('disconnected') && !connectedButton.classList.contains('not-found') && !connectedButton.classList.contains('scanning')) {
-    var baudrateElement = document.getElementById('baudrate')
-    var baudrate = baudrateElement.options[baudrateElement.selectedIndex].value
-    ipc.send('serial.connect', connectedPort, parseInt(baudrate))
+    connect()
   } else if (connectedButton.classList.length == 1) {
     ipc.send('serial.close')
   }
@@ -57,6 +62,10 @@ ipc.on('usb.disconnected', function(event) {
     connectedButton.classList.add('not-found')
     connectedStatus.innerHTML = 'Not Found'
   }
+})
+
+ipc.on('usb.connect', function(event) {
+  connect()
 })
 
 ipc.on('serial.open', function(event) {

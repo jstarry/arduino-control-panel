@@ -1,30 +1,20 @@
-require('../vendor/colorpicker.js'); // global
 const ipc = require('electron').ipcRenderer
 const BrowserWindow = require('electron').remote.BrowserWindow
 
 const WINDOW = BrowserWindow.getAllWindows()[0]
 
-// const COLOR_PICKER = ColorPicker(document.getElementById('color-picker'), function(hex, hsv, rgb) {
-//   if (ignoreChangeFromClick) {
-//     ignoreChangeFromClick = false
-//     return
-//   }
-//
-//   var selectedLED = document.querySelector('.led-light.selected')
-//   selectedLED.style.backgroundColor = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ', 0.1)'
-//   selectedLED.style.borderColor = hex
-//   var key = selectedLED.getAttribute('key')
-//   WINDOW.webContents.send('serial.send', 'LED|' + key + '|' + hex)
-// })
-
-function updateLEDColor(key, hex) {
+function updateLEDColor(key, hex, backgroundHex='') {
   const ledEl = document.querySelector(".led-light[key='" + key + "']")
   if (hex == '#000000') {
     ledEl.style.backgroundColor = ''
     ledEl.style.borderColor = ''
   } else {
-    const rgb = hex2rgb(hex)
-    ledEl.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',0.1)'
+    if (backgroundHex == '') {
+      const rgb = hex2rgb(hex)
+      ledEl.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',0.1)'
+    } else {
+      ledEl.style.backgroundColor = backgroundHex
+    }
     ledEl.style.borderColor = hex
   }
 }
@@ -48,15 +38,17 @@ function selectLight(lightEl) {
     badge.classList.add('led-badge')
     badge.addEventListener('click', (el) => {
       if (badge.classList.contains('clicked')) return
-      badge.classList.add('clicked')
       const index = parseInt(badge.getAttribute('index'))
+      const style = window.getComputedStyle(badge)
+      updateLEDColor(key, style.borderColor, style.backgroundColor)
       WINDOW.webContents.send('serial.send', 'LED|' + key + '|' + colors[index])
+      badge.classList.add('clicked')
       setTimeout(() => {
         badge.classList.remove('clicked')
       }, 100)
     })
 
-    containerEl.insertBefore(badge, containerEl.firstChild)
+    containerEl.insertBefore(badge, lightEl)
   }
 }
 
@@ -72,7 +64,6 @@ function deselectLight(lightEl) {
   }
 }
 
-// let ignoreChangeFromClick = false
 const lights = document.querySelector('.led-lights')
 for (var i = 0; i < 4; i++) {
   for (var j = 0; j < 4; j++) {
@@ -95,17 +86,20 @@ for (var i = 0; i < 4; i++) {
         const parentEl = document.querySelector('.selected').parentElement
         parentEl.classList.add('animate-to')
       })
-      // ignoreChangeFromClick = true
-      // COLOR_PICKER.setHex(el.currentTarget.style.borderColor)
     })
 
     const ledContainer = document.createElement('div')
     ledContainer.classList.add('led-container')
+    let timeoutHandler = null
     ledContainer.addEventListener('mouseenter', (el) => {
-      WINDOW.webContents.send('serial.send', 'HIGHLIGHT|' + el.currentTarget.lastChild.getAttribute('key') + '|ON')
+      clearTimeout(timeoutHandler)
+      // WINDOW.webContents.send('serial.send', 'HIGHLIGHT|' + el.currentTarget.lastChild.getAttribute('key') + '|ON')
     })
     ledContainer.addEventListener('mouseleave', (el) => {
-      WINDOW.webContents.send('serial.send', 'HIGHLIGHT|' + el.currentTarget.lastChild.getAttribute('key') + '|OFF')
+      timeoutHandler = setTimeout(() => {
+        deselectLight(ledContainer.lastChild)
+      }, 250)
+      // WINDOW.webContents.send('serial.send', 'HIGHLIGHT|' + el.currentTarget.lastChild.getAttribute('key') + '|OFF')
     })
     ledContainer.appendChild(led)
     lights.appendChild(ledContainer)

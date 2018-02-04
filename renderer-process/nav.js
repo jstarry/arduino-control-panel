@@ -8,7 +8,6 @@ ipc.on('serial.open', function(event) {
   WINDOW.setSize(905, 600)
   WINDOW.setMinimumSize(905, 450)
   showNavAndConsole()
-  showConnect()
 })
 
 ipc.on('serial.close', function(event) {
@@ -21,7 +20,7 @@ ipc.on('serial.close', function(event) {
 })
 
 function showMainContent () {
-  document.querySelector('.js-content').classList.add('is-shown')
+  document.querySelector('main').classList.add('is-shown')
 }
 
 function showSection(section) {

@@ -42,12 +42,20 @@ ipc.on('serial.connect', function(event, port, baudRate) {
   })
 })
 
+const debug = /--debug/.test(process.argv[2])
+
 module.exports = {
   open: function() {
-    listener.send('serial.open')
+    if (serialport) return
+    listener.send('usb.connect')
+    if (debug) {
+      setTimeout(() => {
+        if (!serialport) listener.send('serial.open')
+      }, 100)
+    }
   },
   close: function() {
     if (serialport) serialport.close((e) => {})
-    else listener.send('serial.close')
+    listener.send('serial.close')
   }
 }

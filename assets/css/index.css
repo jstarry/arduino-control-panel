@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   position: absolute;
   background: none;
@@ -9,6 +13,7 @@ html {
 body {
   font-family: monospace;
   position: absolute;
+  display: flex;
   background: none;
   top: 0px;
   left: 0px;
@@ -26,6 +31,17 @@ main {
 
 .fontawesome-i2svg-active nav {
   display: initial;
+}
+
+.section {
+  position: relative;
+  overflow: hidden;
+  display: none;
+  opacity: 0;
+}
+.section.is-shown {
+  display: flex;
+  opacity: 1;
 }
 
 nav.sidebar {
@@ -135,7 +151,7 @@ section#connect-section {
   height: 100%;
   z-index: 1;
   opacity: 0.6;
-  background-image: url('./images/usb.png');
+  background-image: url('../img/usb.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 75% 75%;
@@ -380,8 +396,10 @@ div.led-container {
   margin: 5px;
   border-radius: 4px;
   border: 1px solid;
-  background-color: #FAFAFA;
-  border-color: #CCC;
+  background-color: #c7c7c7;
+  border-color: #777;
+  /* background-color: #8c8c8c;
+  border-color: #000; */
   cursor: pointer;
   box-sizing: border-box;
   transition: all 0.25s;
@@ -438,11 +456,14 @@ div.led-container {
 }
 
 .led-badge.clicked:nth-child(4) {
-  background: #000;
+  /* background: #000; */
+  background: #777;
 }
 .led-badge:nth-child(4) {
-  background: #8c8c8c;
-  border: 1px solid #000;
+  background: #c7c7c7;
+  border: 1px solid #777;
+  /* background: #8c8c8c;
+  border: 1px solid #000; */
 }
 .led-badge:nth-child(5) {
   visibility: hidden;
@@ -451,7 +472,7 @@ div.led-container {
   background: #CCC;
 }
 .led-badge:nth-child(6) {
-  background: white;
+  background: #FAFAFA;
   border: 1px solid #CCC;
 }
 
