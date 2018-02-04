@@ -22,7 +22,7 @@ function updateLEDColor(key, hex, backgroundHex='') {
 ipc.on('serial.received', function(event, message) {
   message = message.trim()
   const msgParts = message.split('|')
-  if (msgParts[0] == 'SET_LED')
+  if (msgParts[0] == 'LED')
     updateLEDColor(msgParts[1], msgParts[2])
 })
 

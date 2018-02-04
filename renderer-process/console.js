@@ -5,16 +5,12 @@ function append(str, colorClass, prefix='') {
 
   let key = ''
   let msgParts = str.split('|')
-  if (msgParts.length > 1)
-    key = (msgParts[0] + '-' + msgParts[1]).toLowerCase()
-
-  if (prefix != '')
-    str = prefix + ' - ' + str
+  if (msgParts.length > 1) key = (msgParts[0] + '-' + msgParts[1]).toLowerCase()
+  if (prefix != '') str = prefix + ' - ' + str
 
   // update prev element if it exists
-  // TODO only update it if it is the most recent message
   if (key != '') {
-    const prevEl = document.querySelector('.serial-msg[data-key=' + key + ']')
+    const prevEl = document.querySelector('.' + colorClass + '.serial-msg[data-key=' + key + ']')
     if (prevEl) {
       prevEl.innerHTML = str
       return
@@ -35,7 +31,7 @@ function append(str, colorClass, prefix='') {
 }
 
 function systemMessage(message) {
-  append(message, 'connect-color', 'SYSTEM')
+  append(message, 'system-color', 'SYSTEM')
 }
 
 ipc.on('serial.received', function(event, message) {

@@ -7,7 +7,9 @@ ipc.on('serial.open', function(event) {
   WINDOW.setResizable(true)
   WINDOW.setSize(905, 600)
   WINDOW.setMinimumSize(905, 450)
+  hideAllSections()
   showNavAndConsole()
+  showConnect()
 })
 
 ipc.on('serial.close', function(event) {

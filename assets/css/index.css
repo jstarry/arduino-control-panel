@@ -125,7 +125,7 @@ div.container {
 
 section#connect-section {
   text-align: center;
-  background-color: '#E1F3F4';
+  background-color: #E1F3F4;
   flex-direction: column;
   padding: 30px;
   align-items: center;
@@ -341,7 +341,7 @@ section#led-section {
   align-items: center;
 }
 .app-container-label.color-picker-label {
-  color: #d08788;
+  color: #b96b6c;
 }
 .color-picker-row {
   display: flex;
@@ -600,6 +600,9 @@ section#console-section {
   margin-left: 10px;
   font-size: 12px;
 }
+.serial-msg.system-color {
+  color: #666;
+}
 .serial-msg.connect-color {
   color: rgb(4, 142, 146);
 }
@@ -634,7 +637,7 @@ section#console-section {
   width: 25px;
   height: 25px;
   text-align: center;
-  padding-top: 2px;
+  padding-top: 5px;
   border-radius: 100%;
 }
 

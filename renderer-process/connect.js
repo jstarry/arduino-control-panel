@@ -3,6 +3,7 @@ const ipc = require('electron').ipcRenderer
 
 const WINDOW = BrowserWindow.getAllWindows()[0]
 
+console.log('connect restart')
 ipc.send('usb.status', WINDOW.id)
 ipc.send('serial.status', WINDOW.id)
 
